@@ -1,7 +1,28 @@
 persistent_tree - n log n lookup for big persistent data
 
-1) Installation
-2) Running Tests
+1) Requirements
+1.1) pydot
+2) Installation
+3) Running Tests
+
+
+------------------------------------------------------------------------
+Requirements
+
+You need the following (unusual) requirements in order to use the
+persistent tree library.
+
+
+------------------------------------------------------------------------
+Requirements - pydot
+
+pydot ( http://code.google.com/p/pydot/ ) can be used to format trees
+as dot graphs. You only need pydot if you plan to use the
+persistent_tree.dot module.
+
+You can install pydot via pip:
+
+$ pip install --user pydot
 
 
 ------------------------------------------------------------------------
