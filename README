@@ -4,6 +4,7 @@ persistent_tree - n log n lookup for big persistent data
 1.1) pydot
 2) Installation
 3) Running Tests
+4) License
 
 
 ------------------------------------------------------------------------
@@ -42,3 +43,10 @@ $ export PYTHONPATH=~/.local/lib/python:$PYTHONPATH
 Running Tests
 
 $ python setup.py test
+
+
+------------------------------------------------------------------------
+License
+
+The persistent_tree library is licensend under the LGPL v3 license. See
+the file COPYING for more details.
