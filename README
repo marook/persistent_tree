@@ -20,4 +20,4 @@ $ export PYTHONPATH=~/.local/lib/python:$PYTHONPATH
 ------------------------------------------------------------------------
 Running Tests
 
-$ python src/test_model_node.py
+$ python setup.py test
