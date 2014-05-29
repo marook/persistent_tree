@@ -24,13 +24,13 @@ class DotConverter(object):
 
             left_node = node.left
             if not left_node is None:
-                self.append_edge_from_node_to_id(graph, left_node, node_id)
+                self.append_edge_from_node_to_id(graph, left_node, node_id, 'red')
 
             right_node = node.right
             if not right_node is None:
-                self.append_edge_from_node_to_id(graph, right_node, node_id)
+                self.append_edge_from_node_to_id(graph, right_node, node_id, 'blue')
 
-    def append_edge_from_node_to_id(self, graph, src_node, dst_node_id):
+    def append_edge_from_node_to_id(self, graph, src_node, dst_node_id, color):
         src_node_id = self.key_to_id(src_node.key)
 
-        graph.add_edge(pydot.Edge(src_node_id, dst_node_id))
+        graph.add_edge(pydot.Edge(dst_node_id, src_node_id, color=color))

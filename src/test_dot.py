@@ -13,7 +13,7 @@ class DotConverterTest(unittest.TestCase):
         graph = self.converter.nodes_to_graph(parent)
 
         # TODO make this test independent of graph formatting
-        self.assertEqual('digraph G {\n0 -> 1;\n}\n', graph.to_string())
+        self.assertEqual('digraph G {\n1 -> 0  [color=red];\n}\n', graph.to_string())
 
 def create_node(key):
     return model.Node(key, '')

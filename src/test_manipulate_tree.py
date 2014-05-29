@@ -36,36 +36,22 @@ class BalanceTreeTest(unittest.TestCase):
         http://en.wikipedia.org/wiki/AVL_tree#Insertion
         '''
 
-        node5 = create_node('n5')
+        self.tree.insert_node(create_node('n5'))
+        self.tree.insert_node(create_node('n3'))
+        self.tree.insert_node(create_node('n4'))
 
-        node3 = create_node('n3')
-        node5.left = node3
-
-        node4 = create_node('n4')
-        node3.right = node4
-
-        self.tree.root_node = node5
-
-        self.tree.balance()
-
-        self.assertEqual('n3', self.tree.root_node.left.key)
+        self.assertEqual('n5', self.tree.root_node.left.key)
         self.assertEqual('n4', self.tree.root_node.key)
-        self.assertEqual('n5', self.tree.root_node.right.key)
+        self.assertEqual('n3', self.tree.root_node.right.key)
 
     def test_balance_right_case_tree_to_left_case_tree(self):
-        node4 = create_node('n4')
-
-        node5 = create_node('n5')
-        node4.right = node5
-
-        self.tree.root_node = node4
-
-        self.tree.balance()
+        self.tree.insert_node(create_node('n4'))
+        self.tree.insert_node(create_node('n5'))
 
         print dot.DotConverter().nodes_to_graph(self.tree.root_node).to_string()
 
-        self.assertEqual('n4', self.tree.root_node.left.key)
-        self.assertEqual('n5', self.tree.root_node.key)
+        self.assertEqual('n5', self.tree.root_node.left.key)
+        self.assertEqual('n4', self.tree.root_node.key)
 
 def create_node(key):
     return model.Node(key, '')
