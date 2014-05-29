@@ -19,3 +19,6 @@ class Node(object):
             weight += self.right.weight
 
         return weight
+
+    def __eq__(self, other):
+        return self.key == other.key and self.data == other.data and self.left == other.left and self.right == other.right
