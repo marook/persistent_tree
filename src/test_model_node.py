@@ -8,6 +8,18 @@ class NodeWeightTest(unittest.TestCase):
     def test_that_single_node_has_weight_1(self):
         self.assertEqual(1, create_node().weight)
 
+class NodeHeightTest(unittest.TestCase):
+
+    def test_that_single_node_has_height_1(self):
+        self.assertEqual(1, create_node().height)
+
+    def test_that_balanced_three_node_tree_has_height_2(self):
+        parent = create_node()
+        parent.left = create_node()
+        parent.right = create_node()
+        
+        self.assertEqual(2, parent.height)
+
 class NodeEqualsTest(unittest.TestCase):
 
     def setUp(self):
