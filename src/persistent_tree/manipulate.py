@@ -23,28 +23,25 @@ class Tree(object):
 
         self.root_node = insert_node_in_tree(self.root_node, inserted_node, self.key_comparator)
 
-    def balance(self):
-        self.root_node = self.balance_subtree(self.root_node)
+    def balance(self, **kwargs):
+        self.root_node = self.balance_subtree(self.root_node, **kwargs)
 
-    def balance_subtree(self, subtree_root_node):
+    def balance_subtree(self, subtree_root_node, rotate_right_accepted_inbalance=2, rotate_left_accepted_inbalance=-1):
         if subtree_root_node is None:
             return subtree_root_node
 
-        if not subtree_root_node.left is None:
-            self.balance_subtree(subtree_root_node.left)
-
-        if not subtree_root_node.right is None:
-            self.balance_subtree(subtree_root_node.right)
+        subtree_root_node.left = self.balance_subtree(subtree_root_node.left)
+        subtree_root_node.right = self.balance_subtree(subtree_root_node.right)
 
         subtree_root_balance_factor = subtree_root_node.balance_factor
 
-        if subtree_root_balance_factor >= 2:
+        if subtree_root_balance_factor >= rotate_right_accepted_inbalance:
             if subtree_root_node.left.balance_factor == -1:
                 subtree_root_node.left = rotate_node_left(subtree_root_node.left)
 
             subtree_root_node = rotate_node_right(subtree_root_node)
-        elif subtree_root_balance_factor <= -2:
-            if subtree_root_node.right.balance_factor == -1:
+        elif subtree_root_balance_factor <= rotate_left_accepted_inbalance:
+            if subtree_root_node.right.balance_factor == 1:
                 subtree_root_node.right = rotate_node_right(subtree_root_node.right)
 
             subtree_root_node = rotate_node_left(subtree_root_node)
