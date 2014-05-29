@@ -3,7 +3,7 @@
 from persistent_tree import model
 import unittest
 
-class ModelWeightTest(unittest.TestCase):
+class NodeWeightTest(unittest.TestCase):
 
     def test_that_single_node_has_weight_1(self):
         self.assertEqual(1, create_node().weight)
