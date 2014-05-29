@@ -20,7 +20,7 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
         self.file.close()
 
     def test_write_and_find_one_node(self):
-        self.persisted_root_node = model.Node('0', 'd0')
+        self.persisted_root_node = create_node('0')
 
         self.write_nodes()
 
@@ -30,6 +30,16 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
         self.write_nodes()
 
         self.assertEqual(None, self.find_node('0'))
+
+    def test_write_and_find_leaf_node(self):
+        leaf_node = create_node('0')
+
+        self.persisted_root_node = create_node('1')
+        self.persisted_root_node.left = leaf_node
+
+        self.write_nodes()
+
+        self.assertEqual(leaf_node, self.find_node('0'))
 
     def write_nodes(self):
         self.writer.write_nodes(self.file, self.persisted_root_node)
@@ -42,3 +52,5 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
     def find_node(self, lookup_key):
         return self.reader.find_node(self.file, lookup_key)
 
+def create_node(key):
+    return model.Node(key, 'd%s' % (key, ))
