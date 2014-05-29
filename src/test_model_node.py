@@ -10,11 +10,23 @@ class NodeWeightTest(unittest.TestCase):
 
 class NodeEqualsTest(unittest.TestCase):
 
-    def test_that_same_values_make_nodes_equal(self):
-        n1 = create_node()
-        n2 = create_node()
+    def setUp(self):
+        self.n1 = create_node()
+        self.n2 = create_node()
 
-        self.assertEqual(n1, n2)
+    def test_that_same_values_make_nodes_equal(self):
+        self.assert_nodes_equal()
+
+    def test_that_different_key_make_nodes_unequal(self):
+        self.n2.key = 'other_key'
+
+        self.assert_nodes_not_equal()
+
+    def assert_nodes_equal(self):
+        self.assertEqual(self.n1, self.n2)
+
+    def assert_nodes_not_equal(self):
+        self.assertFalse(self.n1 == self.n2)
 
 def create_node():
     return model.Node('key', 'value')
