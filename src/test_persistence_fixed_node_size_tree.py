@@ -30,5 +30,10 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.assertEqual(self.persisted_root_node, found_node)
 
+    def test_find_no_node_in_empty_file(self):
+        self.writer.write_nodes(self.file, None)
+
+        self.assertEqual(None, self.reader.find_node(self.file, '0'))
+
     def reset_file_position(self):
         self.file.seek(0)
