@@ -32,6 +32,18 @@ class Node(object):
 
         return max_child_height + 1
         
+    @property
+    def balance_factor(self):
+        '''Balance factor as defined in an AVL tree.
+
+        For more details see
+        http://en.wikipedia.org/wiki/AVL_tree#Insertion
+        '''
+
+        height_left = 0 if self.left is None else self.left.height
+        height_right = 0 if self.right is None else self.right.height
+
+        return height_left - height_right
 
     def __eq__(self, other):
         return self.key == other.key and self.data == other.data and self.left == other.left and self.right == other.right

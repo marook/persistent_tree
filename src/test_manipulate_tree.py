@@ -24,6 +24,34 @@ class ManipulateTreeTest(unittest.TestCase):
         self.tree.insert_node(create_node(key))
         
 
+class BalanceTreeTest(unittest.TestCase):
+
+    def setUp(self):
+        self.tree = manipulate.Tree()
+
+    def test_balance_left_right_case_tree(self):
+        '''Balances a tree with three nodes.
+
+        The tree is a 'left right case' as defined in
+        http://en.wikipedia.org/wiki/AVL_tree#Insertion
+        '''
+
+        node5 = create_node('n5')
+
+        node3 = create_node('n3')
+        node5.left = node3
+
+        node4 = create_node('n4')
+        node3.right = node4
+
+        self.tree.root_node = node5
+
+        self.tree.balance()
+
+        self.assertEqual('n3', self.tree.root_node.left.key)
+        self.assertEqual('n4', self.tree.root_node.key)
+        self.assertEqual('n5', self.tree.root_node.right.key)
+
 def create_node(key):
     return model.Node(key, '')
 
