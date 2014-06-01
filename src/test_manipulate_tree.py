@@ -72,6 +72,41 @@ class RotateNodeLeftTest(unittest.TestCase):
         # then test that the other edges are still the same
         self.assertEquals(nodes['l'], nodes['p'].left)
         self.assertEquals(nodes['rr'], nodes['r'].right)
+
+    def test_node_heights_after_rotate_left(self):
+        nodes = create_height_2_tree()
+
+        # first we make sure that the nodes have the correct initial heights
+        self.assert_node_heights(nodes, {
+                'p': 3,
+
+                'r': 2,
+                'rl': 1,
+                'rr': 1,
+
+                'l': 2,
+                'll': 1,
+                'lr': 1,
+                })
+
+        manipulate.rotate_node_left(nodes['p'])
+
+        # after the rotation we check the heights
+        self.assert_node_heights(nodes, {
+                'p': 3,
+
+                'r': 4,
+                'rl': 1,
+                'rr': 1,
+
+                'l': 2,
+                'll': 1,
+                'lr': 1,
+                })
+
+    def assert_node_heights(self, nodes, expected_node_heights):
+        for node_key, expected_node_height in expected_node_heights.iteritems():
+            self.assertEqual(expected_node_height, nodes[node_key].height)
         
 def create_height_2_tree():
     '''Creates a tree with height 2
