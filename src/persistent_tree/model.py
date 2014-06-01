@@ -5,8 +5,11 @@ class Node(object):
         self.key = key
         self.data = data
 
-        self.left = None
-        self.right = None
+        self._parent = None
+        self._left = None
+        self._right = None
+
+        self.height = 1
 
     @property
     def weight(self):
@@ -21,16 +24,58 @@ class Node(object):
         return weight
 
     @property
-    def height(self):
-        max_child_height = 0
+    def left(self):
+        return self._left
+
+    @left.setter
+    def left(self, new_left):
+        if not self.left is None:
+            self.left._parent = None
+
+        self._left = new_left
 
         if not self.left is None:
-            max_child_height = max(max_child_height, self.left.height)
+            self.left._parent = self
+
+        self._update_height()
+
+    @property
+    def right(self):
+        return self._right
+
+    @right.setter
+    def right(self, new_right):
+        if not self.right is None:
+            self.right._parent = None
+
+        self._right = new_right
 
         if not self.right is None:
-            max_child_height = max(max_child_height, self.right.height)
+            self.right._parent = self
 
-        return max_child_height + 1
+        self._update_height()
+
+    def _update_height(self):
+        former_height = self.height
+
+        height = 1
+
+        if not self.left is None:
+            height = self.left.height + 1
+
+        if not self.right is None:
+            right_height = self.right.height + 1
+
+            if right_height > height:
+                height = right_height
+
+        if former_height == height:
+            return
+
+        self.height = height
+
+        if not self._parent is None:
+            self._parent._update_height()
         
     @property
     def balance_factor(self):

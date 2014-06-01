@@ -106,7 +106,9 @@ class RotateNodeLeftTest(unittest.TestCase):
 
     def assert_node_heights(self, nodes, expected_node_heights):
         for node_key, expected_node_height in expected_node_heights.iteritems():
-            self.assertEqual(expected_node_height, nodes[node_key].height)
+            node_height = nodes[node_key].height
+
+            self.assertEqual(expected_node_height, node_height, '%s should have height %s but has %s' % (node_key, expected_node_height, node_height))
         
 def create_height_2_tree():
     '''Creates a tree with height 2
