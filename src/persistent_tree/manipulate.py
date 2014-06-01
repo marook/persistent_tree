@@ -59,6 +59,26 @@ class Tree(object):
         return parent_node
 
 def rotate_node_left(parent):
+    '''Rotates subtree with the specified parent node to the left.
+
+    Input:
+            p
+         /     \
+       l         r
+     /   \     /   \
+    ll   lr   rl   rr
+
+    Output:
+               r
+             /   \
+           p       rr
+         /   \
+       l       rl
+     /   \
+    ll   lr
+
+    '''
+
     right = parent.right
 
     parent.right = right.left
