@@ -5,7 +5,7 @@ class Node(object):
         self.key = key
         self.data = data
 
-        self._parent = None
+        self.parent = None
         self._left = None
         self._right = None
 
@@ -30,12 +30,12 @@ class Node(object):
     @left.setter
     def left(self, new_left):
         if not self.left is None:
-            self.left._parent = None
+            self.left.parent = None
 
         self._left = new_left
 
         if not self.left is None:
-            self.left._parent = self
+            self.left.parent = self
 
         self._update_height()
 
@@ -46,12 +46,12 @@ class Node(object):
     @right.setter
     def right(self, new_right):
         if not self.right is None:
-            self.right._parent = None
+            self.right.parent = None
 
         self._right = new_right
 
         if not self.right is None:
-            self.right._parent = self
+            self.right.parent = self
 
         self._update_height()
 
@@ -74,8 +74,8 @@ class Node(object):
 
         self.height = height
 
-        if not self._parent is None:
-            self._parent._update_height()
+        if not self.parent is None:
+            self.parent._update_height()
         
     @property
     def balance_factor(self):
