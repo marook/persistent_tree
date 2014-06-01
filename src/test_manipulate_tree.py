@@ -53,6 +53,13 @@ class BalanceTreeTest(unittest.TestCase):
         self.assertEqual('n5', self.tree.root_node.left.key)
         self.assertEqual('n4', self.tree.root_node.key)
 
+class RotateNodeLeftTest(unittest.TestCase):
+
+    def test_rotate_fails_when_there_is_no_right_child_node(self):
+        parent = create_node('n0')
+
+        self.assertRaises(Exception, manipulate.rotate_node_left, parent)
+
 def create_node(key):
     return model.Node(key, '')
 
