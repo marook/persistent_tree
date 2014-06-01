@@ -60,6 +60,61 @@ class RotateNodeLeftTest(unittest.TestCase):
 
         self.assertRaises(Exception, manipulate.rotate_node_left, parent)
 
+    def test_rotate_left_child_node_assignments(self):
+        nodes = create_height_2_tree()
+
+        manipulate.rotate_node_left(nodes['p'])
+
+        # first test the edges affected by the rotation
+        self.assertEqual(nodes['p'], nodes['r'].left)
+        self.assertEqual(nodes['rl'], nodes['p'].right)
+
+        # then test that the other edges are still the same
+        self.assertEquals(nodes['l'], nodes['p'].left)
+        self.assertEquals(nodes['rr'], nodes['r'].right)
+        
+def create_height_2_tree():
+    '''Creates a tree with height 2
+
+            p
+         /     \
+       l         r
+     /   \     /   \
+    ll   lr   rl   rr
+    '''
+
+    p = create_node('p')
+    
+    l = create_node('l')
+    ll = create_node('ll')
+    lr = create_node('lr')
+    
+    r = create_node('r')
+    rl = create_node('rl')
+    rr = create_node('rr')
+
+    p.left = l
+    p.right = r
+
+    l.left = ll
+    l.right = lr
+
+    r.left = rl
+    r.right = rr
+
+    return {
+        'p': p,
+
+        'l': l,
+        'll': ll,
+        'lr': lr,
+
+        'r': r,
+        'rl': rl,
+        'rr': rr,
+        }
+    
+
 def create_node(key):
     return model.Node(key, '')
 
