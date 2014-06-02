@@ -18,10 +18,6 @@ class Test(core.Command):
         pass
 
     def run(self):
-        '''
-        Finds all the tests modules in tests/, and runs them.
-        '''
-
         import unittest
 
         sys.path.insert(0, 'src')
