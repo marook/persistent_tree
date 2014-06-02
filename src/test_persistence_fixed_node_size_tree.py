@@ -41,6 +41,16 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.assertEqual(leaf_node, self.find_node('0'))
 
+    def test_find_zero_key_node_raises_IllegalKeyException(self):
+        '''The FixedNodeSizeTree does not support 'zero' keys.
+
+        A key with just \0 bytes markes an not set leaf node.
+        '''
+
+        self.write_nodes()
+
+        self.assertRaises(persistence.IllegalKeyValueException, self.find_node, '\x00')
+
     def write_nodes(self):
         self.writer.write_nodes(self.file, self.persisted_root_node)
 

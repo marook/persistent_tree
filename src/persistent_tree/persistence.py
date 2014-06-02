@@ -85,6 +85,8 @@ class FixedNodeSizeReader(object):
         return node_count
 
     def find_node_in_subtree(self, f, lookup_key, subtree_node_index, node_count):
+        assert_key_is_set_node_key(lookup_key)
+
         if subtree_node_index >= node_count:
             return None
 
@@ -118,6 +120,23 @@ class FixedNodeSizeReader(object):
 
     def seek_node(self, f, node_index):
         seek_fixed_size_node(f, node_index, self.node_size)
+
+def assert_key_is_set_node_key(key):
+    if not is_set_node_key(key):
+        raise IllegalKeyValueException()
+
+def is_set_node_key(key):
+    '''A key with just \0 bytes markes an not set leaf node.
+    '''
+    
+    for character in key:
+        if ord(character) != 0:
+            return True
+
+    return False
+
+class IllegalKeyValueException(Exception):
+    pass
 
 def seek_fixed_size_node(f, node_index, node_size, offset=FIXED_NODE_SIZE_HEADER_SIZE):
     file_pos = node_index * node_size + offset
