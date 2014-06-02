@@ -26,6 +26,8 @@ class FixedNodeSizeWriter(object):
         if subtree_node is None:
             return
 
+        assert_key_is_set_node_key(subtree_node.key)
+
         self.assert_valid_node_size(subtree_node)
 
         self.seek_node(f, node_index)

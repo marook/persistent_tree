@@ -51,6 +51,11 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.assertRaises(persistence.IllegalKeyValueException, self.find_node, '\x00')
 
+    def test_write_not_set_key_node_fails_with_IllegalKeyValueException(self):
+        self.persisted_root_node = create_node('\x00')
+
+        self.assertRaises(persistence.IllegalKeyValueException, self.write_nodes)
+
     def write_nodes(self):
         self.writer.write_nodes(self.file, self.persisted_root_node)
 
