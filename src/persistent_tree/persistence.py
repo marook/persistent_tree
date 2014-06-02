@@ -94,6 +94,9 @@ class FixedNodeSizeReader(object):
 
         subtree_node_key = self.read_key(f, subtree_node_index)
 
+        if not is_set_node_key(subtree_node_key):
+            return None
+
         cmp_result = self.key_comparator(lookup_key, subtree_node_key)
 
         if cmp_result == 0:
