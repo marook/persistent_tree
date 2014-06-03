@@ -22,7 +22,16 @@ class ManipulateTreeTest(unittest.TestCase):
 
     def insert_node_with_key(self, key):
         self.tree.insert_node(create_node(key))
-        
+
+    def test_insert_with_same_key_replaces_former_node(self):
+        key = 'k0'
+
+        self.tree.insert_node(create_node(key, 'd0'))
+        self.tree.insert_node(create_node(key, 'd1'))
+
+        self.assertEqual('d1', self.tree.root_node.data)
+        self.assertEqual(None, self.tree.root_node.left)
+        self.assertEqual(None, self.tree.root_node.right)
 
 class BalanceTreeTest(unittest.TestCase):
 
@@ -152,8 +161,8 @@ def create_height_2_tree():
         }
     
 
-def create_node(key):
-    return model.Node(key, '')
+def create_node(key, data=''):
+    return model.Node(key, data)
 
 if __name__ == '__main__':
     unittest.main()
