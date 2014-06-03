@@ -35,8 +35,8 @@ class FixedNodeSizeWriter(object):
         f.write(subtree_node.key)
         f.write(subtree_node.data)
 
-        self.write_nodes_subtree(f, 2 * node_index + 1, subtree_node.left)
-        self.write_nodes_subtree(f, 2 * node_index + 2, subtree_node.right)
+        self.write_nodes_subtree(f, get_left_node_index(node_index), subtree_node.left)
+        self.write_nodes_subtree(f, get_right_node_index(node_index), subtree_node.right)
 
     def assert_valid_node_size(self, node):
         self.assert_valid_key_size(node.key)
@@ -111,9 +111,9 @@ class FixedNodeSizeReader(object):
         subtree_node_key = None
 
         if cmp_result < 0:
-            return self.find_node_in_subtree(f, lookup_key, 2 * subtree_node_index + 1, node_count)
+            return self.find_node_in_subtree(f, lookup_key, get_left_node_index(subtree_node_index), node_count)
         else:
-            return self.find_node_in_subtree(f, lookup_key, 2 * subtree_node_index + 2, node_count)
+            return self.find_node_in_subtree(f, lookup_key, get_right_node_index(subtree_node_index), node_count)
 
     def read_key(self, f, node_index):
         self.seek_node(f, node_index)
@@ -125,6 +125,12 @@ class FixedNodeSizeReader(object):
 
     def seek_node(self, f, node_index):
         seek_fixed_size_node(f, node_index, self.node_size)
+
+def get_left_node_index(parent_index):
+    return 2 * parent_index + 1
+
+def get_right_node_index(parent_index):
+    return 2 * parent_index + 2
 
 def assert_key_is_set_node_key(key):
     if not is_set_node_key(key):
