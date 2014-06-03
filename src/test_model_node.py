@@ -40,8 +40,29 @@ class NodeEqualsTest(unittest.TestCase):
     def assert_nodes_not_equal(self):
         self.assertFalse(self.n1 == self.n2)
 
-def create_node():
-    return model.Node('key', 'value')
+class NodeParentPropertyTest(unittest.TestCase):
+
+    def setUp(self):
+        self.n1 = create_node('k0')
+        self.n2 = create_node('k1')
+
+    def test_default_parent_property_is_None(self):
+        self.assertEqual(None, self.n1.parent)
+
+    def test_parent_property_is_set_when_assigning_left_child(self):
+        self.n1.left = self.n2
+
+        self.assertEqual(self.n1, self.n2.parent)
+    
+    def test_parent_property_is_reset_when_reassigning_left_child(self):
+        self.n1.left = self.n2
+        self.n1.left = None
+
+        self.assertEqual(None, self.n2.parent)
+    
+
+def create_node(key='key'):
+    return model.Node(key, 'value')
 
 if __name__ == '__main__':
     unittest.main()
