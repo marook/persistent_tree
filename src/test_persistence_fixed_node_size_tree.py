@@ -77,5 +77,27 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
     def find_node(self, lookup_key):
         return self.reader.find_node(self.file, lookup_key)
 
+class GetLeftNodeIndexTest(unittest.TestCase):
+
+    def test_0_node_left_index_is_1(self):
+        self.assertEqual(1, persistence.get_left_node_index(0))
+
+    def test_1_node_left_index_is_3(self):
+        self.assertEqual(3, persistence.get_left_node_index(1))
+
+    def test_2_node_left_index_is_5(self):
+        self.assertEqual(5, persistence.get_left_node_index(2))
+
+class GetRightNodeIndexTest(unittest.TestCase):
+
+    def test_0_node_right_index_is_2(self):
+        self.assertEqual(2, persistence.get_right_node_index(0))
+
+    def test_1_node_right_index_is_4(self):
+        self.assertEqual(4, persistence.get_right_node_index(1))
+
+    def test_2_node_right_index_is_6(self):
+        self.assertEqual(6, persistence.get_right_node_index(2))
+
 def create_node(key):
     return model.Node(key, 'd%s' % (key, ))
