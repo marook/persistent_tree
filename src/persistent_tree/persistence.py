@@ -1,9 +1,6 @@
 from persistent_tree import manipulate, model
 import struct
 
-FIXED_NODE_SIZE_HEADER_FORMAT = '!L'
-FIXED_NODE_SIZE_HEADER_SIZE = struct.calcsize(FIXED_NODE_SIZE_HEADER_FORMAT)
-
 class FixedNodeSizeWriter(object):
 
     def __init__(self, key_size, data_size):
@@ -13,14 +10,7 @@ class FixedNodeSizeWriter(object):
         self.node_size = self.key_size + self.data_size
 
     def write_nodes(self, f, root_node):
-        self.write_node_count(f, 0 if root_node is None else root_node.weight)
-
         self.write_nodes_subtree(f, 0, root_node)
-
-    def write_node_count(self, f, node_count):
-        header = struct.pack(FIXED_NODE_SIZE_HEADER_FORMAT, node_count)
-
-        f.write(header)
 
     def write_nodes_subtree(self, f, node_index, subtree_node):
         if subtree_node is None:
@@ -73,24 +63,10 @@ class FixedNodeSizeReader(object):
         self.key_comparator = key_comparator
 
     def find_node(self, f, lookup_key):
-        node_count = self.read_node_count(f)
+        return self.find_node_in_subtree(f, lookup_key, 0)
 
-        return self.find_node_in_subtree(f, lookup_key, 0, node_count)
-
-    def read_node_count(self, f):
-        f.seek(0)
-
-        raw_header = f.read(FIXED_NODE_SIZE_HEADER_SIZE)
-
-        node_count = struct.unpack(FIXED_NODE_SIZE_HEADER_FORMAT, raw_header)[0]
-
-        return node_count
-
-    def find_node_in_subtree(self, f, lookup_key, subtree_node_index, node_count):
+    def find_node_in_subtree(self, f, lookup_key, subtree_node_index):
         assert_key_is_set_node_key(lookup_key)
-
-        if subtree_node_index >= node_count:
-            return None
 
         subtree_node_key = self.read_key(f, subtree_node_index)
 
@@ -111,9 +87,9 @@ class FixedNodeSizeReader(object):
         subtree_node_key = None
 
         if cmp_result < 0:
-            return self.find_node_in_subtree(f, lookup_key, get_left_node_index(subtree_node_index), node_count)
+            return self.find_node_in_subtree(f, lookup_key, get_left_node_index(subtree_node_index))
         else:
-            return self.find_node_in_subtree(f, lookup_key, get_right_node_index(subtree_node_index), node_count)
+            return self.find_node_in_subtree(f, lookup_key, get_right_node_index(subtree_node_index))
 
     def read_key(self, f, node_index):
         self.seek_node(f, node_index)
@@ -149,7 +125,7 @@ def is_set_node_key(key):
 class IllegalKeyValueException(Exception):
     pass
 
-def seek_fixed_size_node(f, node_index, node_size, offset=FIXED_NODE_SIZE_HEADER_SIZE):
-    file_pos = node_index * node_size + offset
+def seek_fixed_size_node(f, node_index, node_size):
+    file_pos = node_index * node_size
 
     f.seek(file_pos)
