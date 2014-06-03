@@ -31,7 +31,7 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.assertEqual(None, self.find_node('0'))
 
-    def test_write_and_find_leaf_node(self):
+    def test_write_and_find_left_leaf_node(self):
         leaf_node = create_node('0')
 
         self.persisted_root_node = create_node('1')
@@ -39,7 +39,17 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.write_nodes()
 
-        self.assertEqual(leaf_node, self.find_node('0'))
+        self.assertEqual(leaf_node, self.find_node(leaf_node.key))
+
+    def test_write_and_find_right_leaf_node(self):
+        leaf_node = create_node('1')
+
+        self.persisted_root_node = create_node('0')
+        self.persisted_root_node.right = leaf_node
+
+        self.write_nodes()
+
+        self.assertEqual(leaf_node, self.find_node(leaf_node.key))
 
     def test_find_zero_key_node_raises_IllegalKeyException(self):
         '''The FixedNodeSizeTree does not support 'zero' keys.
