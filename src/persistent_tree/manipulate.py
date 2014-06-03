@@ -43,6 +43,9 @@ class Tree(object):
 
             parent_node = inserted_node
 
+            # no need to balance if the key stays the same
+            return parent_node
+
         # balance tree
         parent_node_balance_factor = parent_node.balance_factor
         if parent_node_balance_factor >= 2:

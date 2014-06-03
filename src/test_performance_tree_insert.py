@@ -11,7 +11,9 @@ class TreeInsertPerformanceTest(unittest.TestCase):
         
         duration_increases = list(self.calc_size_duration_increase_ratio(samples))
 
-        self.assertTrue(duration_increases[1] / duration_increases[0] > 0.5, 'insert ratios: %s' % (', '.join(['%s' % (duration_increase, ) for duration_increase in duration_increases]), ))
+        duration_increase_ratio = duration_increases[1] / duration_increases[0]
+
+        self.assertTrue(duration_increase_ratio > 0.4, 'insert ratios: %s -> %s' % (', '.join(['%s' % (duration_increase, ) for duration_increase in duration_increases]), duration_increase_ratio))
         
     def measure_samples(self, sample_sizes):
         samples = {}
