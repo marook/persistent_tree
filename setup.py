@@ -23,7 +23,7 @@ class Test(core.Command):
         sys.path.insert(0, 'src')
 
         testfiles = [ ]
-        for t in glob(path.join(self._dir, 'src', 'test_*.py')):
+        for t in glob(path.join(self._dir, 'src', self.test_file_pattern)):
             if not t.endswith('__init__.py'):
                 testfiles.append('.'.join(
                     [path.splitext(path.basename(t))[0]])
@@ -32,6 +32,16 @@ class Test(core.Command):
         tests = unittest.TestLoader().loadTestsFromNames(testfiles)
         t = unittest.TextTestRunner(verbosity = 1)
         t.run(tests)
+
+    @property
+    def test_file_pattern(self):
+        return 'test_*.py'
+
+class SmallTest(Test):
+
+    @property
+    def test_file_pattern(self):
+        return 'test_s_*.py'
 
 core.setup(
     name = 'persistent_tree',
@@ -45,5 +55,8 @@ core.setup(
     ],
     packages = ['persistent_tree',],
     package_dir = {'': 'src'},
-    cmdclass = {'test': Test},
+    cmdclass = {
+        'test': Test,
+        'test_s': SmallTest,
+    },
 )

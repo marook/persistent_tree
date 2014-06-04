@@ -42,7 +42,13 @@ $ export PYTHONPATH=~/.local/lib/python:$PYTHONPATH
 ------------------------------------------------------------------------
 Running Tests
 
+To run all tests type:
+
 $ python setup.py test
+
+To only run the fast running tests run:
+
+$ python setup.py test_s
 
 
 ------------------------------------------------------------------------
