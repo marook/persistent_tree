@@ -6,7 +6,7 @@ import unittest
 class TreeInsertPerformanceTest(unittest.TestCase):
 
     def test(self):
-        sample_sizes = [100, 1600, 25600]
+        sample_sizes = [1000, 16000, 256000]
         samples = self.measure_samples(sample_sizes)
         
         duration_increases = list(self.calc_size_duration_increase_ratio(samples))
