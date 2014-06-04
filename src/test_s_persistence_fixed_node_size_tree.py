@@ -1,5 +1,5 @@
 
-from persistent_tree import model, persistence, manipulate
+from persistent_tree import dot, manipulate, model, persistence
 import tempfile
 import unittest
 
@@ -78,6 +78,9 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.write_nodes()
 
+        # dumping tree to dot file for debugging
+        self.dump_nodes_to_dot('a_to_z.dot')
+
         for key in alphabet():
             self.assertTrue(not self.find_node(key) is None, 'Missing node with key %s' % (key,))
 
@@ -91,6 +94,9 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
     def find_node(self, lookup_key):
         return self.reader.find_node(self.file, lookup_key)
+
+    def dump_nodes_to_dot(self, file_name):
+        dump_nodes_to_dot(file_name, self.persisted_root_node)
 
 class GetLeftNodeIndexTest(unittest.TestCase):
 
@@ -120,3 +126,9 @@ def create_node(key):
 def alphabet():
     for key_ord in xrange(ord('a'), ord('z')):
         yield chr(key_ord)
+
+def dump_nodes_to_dot(file_name, root_node):
+    graph = dot.DotConverter().nodes_to_graph(root_node)
+
+    with open(file_name, 'w') as f:
+        f.write(graph.to_string())
