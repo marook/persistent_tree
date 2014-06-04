@@ -1,5 +1,5 @@
 
-from persistent_tree import model, persistence
+from persistent_tree import model, persistence, manipulate
 import tempfile
 import unittest
 
@@ -66,6 +66,21 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
 
         self.assertRaises(persistence.IllegalKeyValueException, self.write_nodes)
 
+    def test_write_and_find_many_nodes(self):
+        tree = manipulate.Tree()
+
+        for key in alphabet():
+            node = create_node(key)
+
+            tree.insert_node(node)
+
+        self.persisted_root_node = tree.root_node
+
+        self.write_nodes()
+
+        for key in alphabet():
+            self.assertTrue(not self.find_node(key) is None, 'Missing node with key %s' % (key,))
+
     def write_nodes(self):
         self.writer.write_nodes(self.file, self.persisted_root_node)
 
@@ -101,3 +116,7 @@ class GetRightNodeIndexTest(unittest.TestCase):
 
 def create_node(key):
     return model.Node(key, 'd%s' % (key, ))
+
+def alphabet():
+    for key_ord in xrange(ord('a'), ord('z')):
+        yield chr(key_ord)
