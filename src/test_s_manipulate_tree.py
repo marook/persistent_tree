@@ -1,6 +1,14 @@
 from persistent_tree import dot, manipulate, model
 import unittest
 
+class NaturalComparatorTest(unittest.TestCase):
+
+    def test_compare_strings_with_different_numbers(self):
+        self.assertTrue(manipulate.natural_comparator('n0', 'n1') < 0)
+
+    def test_compare_equal_strings(self):
+        self.assertEqual(0, manipulate.natural_comparator('n0', 'n0'))
+
 class ManipulateTreeTest(unittest.TestCase):
 
     def setUp(self):
@@ -18,7 +26,7 @@ class ManipulateTreeTest(unittest.TestCase):
         self.insert_node_with_key(1)
 
         self.assertEqual(0, self.tree.root_node.key)
-        self.assertEqual(1, self.tree.root_node.left.key)
+        self.assertEqual(1, self.tree.root_node.right.key)
 
     def insert_node_with_key(self, key):
         self.tree.insert_node(create_node(key))
@@ -49,19 +57,35 @@ class BalanceTreeTest(unittest.TestCase):
         self.tree.insert_node(create_node('n3'))
         self.tree.insert_node(create_node('n4'))
 
-        self.assertEqual('n5', self.tree.root_node.left.key)
+        self.assertEqual('n3', self.tree.root_node.left.key)
         self.assertEqual('n4', self.tree.root_node.key)
-        self.assertEqual('n3', self.tree.root_node.right.key)
+        self.assertEqual('n5', self.tree.root_node.right.key)
 
     def test_balance_right_case_tree_to_left_case_tree(self):
         self.tree.insert_node(create_node('n4'))
         self.tree.insert_node(create_node('n5'))
 
-        print dot.DotConverter().nodes_to_graph(self.tree.root_node).to_string()
+        # enable the next line for debugging
+        #self.print_tree()
 
-        self.assertEqual('n5', self.tree.root_node.left.key)
         self.assertEqual('n4', self.tree.root_node.key)
+        self.assertEqual('n5', self.tree.root_node.right.key)
 
+    def test_insert_three_nodes_in_unbalanced_order_produces_balanced_tree(self):
+        self.tree.insert_node(create_node('n1'))
+        self.tree.insert_node(create_node('n2'))
+        self.tree.insert_node(create_node('n3'))
+
+        # enable the next line for debugging
+        #self.print_tree()
+
+        self.assertEqual('n1', self.tree.root_node.left.key)
+        self.assertEqual('n2', self.tree.root_node.key)
+        self.assertEqual('n3', self.tree.root_node.right.key)
+
+    def print_tree(self):
+        print dot.DotConverter().nodes_to_graph(self.tree.root_node).to_string()
+        
 class RotateNodeLeftTest(unittest.TestCase):
 
     def test_rotate_fails_when_there_is_no_right_child_node(self):
@@ -160,7 +184,6 @@ def create_height_2_tree():
         'rr': rr,
         }
     
-
 def create_node(key, data=''):
     return model.Node(key, data)
 
