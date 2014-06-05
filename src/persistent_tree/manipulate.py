@@ -27,12 +27,12 @@ class Tree(object):
         cmp_result = self.key_comparator(parent_node.key, inserted_node.key)
 
         # insert node 
-        if cmp_result < 0:
+        if cmp_result > 0:
             if parent_node.left is None:
                 parent_node.left = inserted_node
             else:
                 parent_node.left = self.insert_node_in_tree(parent_node.left, inserted_node)
-        elif cmp_result > 0:
+        elif cmp_result < 0:
             if parent_node.right is None:
                 parent_node.right = inserted_node
             else:
