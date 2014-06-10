@@ -4,7 +4,7 @@ persistent_tree - n log n lookup for big persistent data
 1.1) pydot
 2) Installation
 3) Usage Example
-3.1) Fixed Size Tree
+3.1) Fixed Node Size Tree
 4) Running Tests
 5) License
 
@@ -42,7 +42,7 @@ $ export PYTHONPATH=~/.local/lib/python:$PYTHONPATH
 
 
 ------------------------------------------------------------------------
-Usage Example - Fixed Size Tree
+Usage Example - Fixed Node Size Tree
 
 Binary trees with fixed key and data size can be stored efficiently on
 file systems with sparse file support
