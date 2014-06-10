@@ -3,8 +3,10 @@ persistent_tree - n log n lookup for big persistent data
 1) Requirements
 1.1) pydot
 2) Installation
-3) Running Tests
-4) License
+3) Usage Example
+3.1) Fixed Size Tree
+4) Running Tests
+5) License
 
 
 ------------------------------------------------------------------------
@@ -37,6 +39,41 @@ If you haven't already extended your local python path then add the following
 to your environment configuration script. For example to your ~/.bashrc:
 
 $ export PYTHONPATH=~/.local/lib/python:$PYTHONPATH
+
+
+------------------------------------------------------------------------
+Usage Example - Fixed Size Tree
+
+Binary trees with fixed key and data size can be stored efficiently on
+file systems with sparse file support
+(http://en.wikipedia.org/wiki/Sparse_file). This includes NTFS and ext3
+file systems.
+
+For n equals the number of nodes in the written tree a O(n) = n applies
+for writing the tree and O(n) = n log n applies for finding a node in
+the file.
+
+from persistent_tree import manipulate, model, persistence
+
+KEY_SIZE_IN_BYTES = 2
+DATA_SIZE_IN_BYTES = 2
+
+# create a 'tree' with a single node
+root_node = model.Node('k0', 'd0')
+
+# write the tree to a binary file
+with open('my_tree.bin', 'wb') as f:
+    writer = persistence.FixedNodeSizeWriter(KEY_SIZE_IN_BYTES, DATA_SIZE_IN_BYTES)
+
+    writer.write_nodes(f, root_node)
+
+# read a node from the written tree file
+reader = persistence.FixedNodeSizeReader(KEY_SIZE_IN_BYTES, DATA_SIZE_IN_BYTES)
+
+with open('my_tree.bin', 'rb') as f:
+    node = reader.find_node(f, 'k0')
+
+    print 'Found node with data: %s' % (node.data, )
 
 
 ------------------------------------------------------------------------
