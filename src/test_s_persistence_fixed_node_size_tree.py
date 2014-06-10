@@ -79,7 +79,7 @@ class WriteAndFindNodeInFixedNodeSizeTreeTest(unittest.TestCase):
         self.write_nodes()
 
         # dumping tree to dot file for debugging
-        self.dump_nodes_to_dot('a_to_z.dot')
+        #self.dump_nodes_to_dot('a_to_z.dot')
 
         for key in alphabet():
             self.assertTrue(not self.find_node(key) is None, 'Missing node with key %s' % (key,))
@@ -123,8 +123,8 @@ class GetRightNodeIndexTest(unittest.TestCase):
 def create_node(key):
     return model.Node(key, 'd%s' % (key, ))
 
-def alphabet():
-    for key_ord in xrange(ord('a'), ord('z')):
+def alphabet(start='a', end='z'):
+    for key_ord in xrange(ord(start), ord(end)):
         yield chr(key_ord)
 
 def dump_nodes_to_dot(file_name, root_node):
