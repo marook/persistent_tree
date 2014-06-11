@@ -6,7 +6,8 @@ persistent_tree - n log n lookup for big persistent data
 3) Usage Example
 3.1) Fixed Node Size Tree
 4) Running Tests
-5) License
+5) Running Memory Benchmark
+6) License
 
 
 ------------------------------------------------------------------------
@@ -86,6 +87,14 @@ $ python setup.py test
 To only run the fast running tests run:
 
 $ python setup.py test_s
+
+
+------------------------------------------------------------------------
+Running Memory Benchmark
+
+To run a memory usage benchmark type the following:
+
+$ python setup.py memory_benchmark
 
 
 ------------------------------------------------------------------------

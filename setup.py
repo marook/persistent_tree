@@ -43,6 +43,23 @@ class SmallTest(Test):
     def test_file_pattern(self):
         return 'test_s_*.py'
 
+class MemoryBenchmark(core.Command):
+
+    user_options = []
+
+    def initialize_options(self):
+        self._dir = os.getcwd()
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        sys.path.insert(0, 'src')
+
+        import memory_benchmark
+
+        memory_benchmark.main()
+
 core.setup(
     name = 'persistent_tree',
     version = '0.0.1',
@@ -58,5 +75,6 @@ core.setup(
     cmdclass = {
         'test': Test,
         'test_s': SmallTest,
+        'memory_benchmark': MemoryBenchmark,
     },
 )
