@@ -52,7 +52,12 @@ def print_rusage_delta(benchmark_name, memory_usage_0, memory_usage_1):
     print 'Memory delta for %s is %s kB' % (benchmark_name, (delta_memory_usage / 1024))
 
 def allocate_many_nodes():
-    return [model.Node(None, None) for i in xrange(10000)]
+    nodes = 10000 * [None,]
+
+    for i in xrange(len(nodes)):
+        nodes[i] = model.Node(None, None)
+
+    return nodes
 
 if __name__ == '__main__':
     main()
