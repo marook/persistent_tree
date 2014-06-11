@@ -1,5 +1,5 @@
 
-from persistent_tree import model
+from persistent_tree import manipulate, model
 
 def main():
     warmup()
@@ -52,12 +52,15 @@ def print_rusage_delta(benchmark_name, memory_usage_0, memory_usage_1):
     print 'Memory delta for %s is %s kB' % (benchmark_name, (delta_memory_usage / 1024))
 
 def allocate_many_nodes():
-    nodes = 10000 * [None,]
+    tree = manipulate.Tree()
 
-    for i in xrange(len(nodes)):
-        nodes[i] = model.Node(None, None)
+    for i in xrange(100000):
+        tree.insert_node(create_node(i))
 
-    return nodes
+    return tree
+
+def create_node(key):
+    return model.Node(key, 'd%s' % (key,))
 
 if __name__ == '__main__':
     main()
