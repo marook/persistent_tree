@@ -61,6 +61,22 @@ class Tree(object):
 
         return parent_node
 
+    def find_node(self, key):
+        return self.find_node_in_subtree(self.root_node, key)
+
+    def find_node_in_subtree(self, parent_node, lookup_key):
+        if parent_node is None:
+            return None
+
+        cmp_result = self.key_comparator(parent_node.key, lookup_key)
+
+        if cmp_result > 0:
+            return self.find_node_in_subtree(parent_node.left, lookup_key)
+        elif cmp_result < 0:
+            return self.find_node_in_subtree(parent_node.right, lookup_key)
+        else:
+            return parent_node
+
 def rotate_node_left(parent):
     '''Rotates subtree with the specified parent node to the left.
 

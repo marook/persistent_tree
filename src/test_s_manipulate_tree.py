@@ -86,6 +86,26 @@ class BalanceTreeTest(unittest.TestCase):
     def print_tree(self):
         print dot.DotConverter().nodes_to_graph(self.tree.root_node).to_string()
         
+class SearchTreeTest(unittest.TestCase):
+
+    def setUp(self):
+        self.tree = manipulate.Tree()
+
+    def test_searching_tree_for_unknown_key_returns_None(self):
+        self.assertEqual(None, self.tree.find_node('k0'))
+
+    def test_searching_tree_for_root_node_key_returns_root_node(self):
+        self.tree.insert_node(create_node('n0'))
+
+        self.assertEqual('n0', self.tree.find_node(self.tree.root_node.key).key)
+
+    def test_searching_tree_for_left_leaf_node_key_returns_leaf_node(self):
+        self.tree.insert_node(create_node('n0'))
+        self.tree.insert_node(create_node('n1'))
+        self.tree.insert_node(create_node('n2'))
+
+        self.assertEqual('n0', self.tree.find_node('n0').key)
+
 class RotateNodeLeftTest(unittest.TestCase):
 
     def test_rotate_fails_when_there_is_no_right_child_node(self):
