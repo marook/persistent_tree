@@ -1,4 +1,4 @@
-persistent_tree - n log n lookup for big persistent data
+persistent_tree - log n lookup for big persistent data
 
 1) Requirements
 1.1) pydot
